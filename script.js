@@ -225,3 +225,56 @@ btnSort.addEventListener('click', function (e) {
   sorted = !sorted;
   console.log('clicked');
 });
+
+// ARRAY METHODS PRACTICE
+// Exercise 1
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, cur) => acc + cur, 0);
+
+console.log(bankDepositSum);
+
+// Exercise 2
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+console.log(numDeposits1000);
+
+const numDeposits10002 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, cur) => (cur >= 1000 ? acc + 1 : acc), 0);
+console.log(numDeposits10002);
+
+// Exercise 3
+const sums = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (acc, cur) => {
+      cur > 0 ? (acc.deposits += cur) : (acc.withdrawals += cur);
+
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+// Exercise 4
+const convertTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with', 'is'];
+
+  const lowerTitle = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => {
+      return exceptions.includes(word)
+        ? word
+        : word[0].toUpperCase() + word.slice(1);
+    })
+    .join(' ');
+
+  return lowerTitle;
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title'));
+console.log(convertTitleCase('and here is another EXAMPLE'));
